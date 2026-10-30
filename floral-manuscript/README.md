@@ -26,7 +26,7 @@ No Lua modules, external artwork, or shell escape are required.
 
 Reserve the left and bottom margins yourself. The main border is clipped to
 7–44 mm from the left edge, and the lower garland occupies 8–30 mm above the
-bottom edge. There is also a thin upper rule and a small upper-right branch.
+bottom edge. A thin upper rule and a small gold star complete the page head.
 The package uses the paper dimensions, but does not detect text collisions or
 adapt to narrow text margins. Inspect custom page furniture before use.
 
@@ -45,9 +45,25 @@ physical sheet number. Resetting the printed page counter does not repeat the
 ornament, and disabled pages still advance the physical sheet count. Inserting
 a page earlier in the document changes the patterns on later physical pages.
 
-The generator uses PGF's random-number machinery. Avoid depending on PGF random
-state across shipouts when changing seeds inside TeX groups: the current save and
-restore implementation does not preserve every grouping scenario.
+The structural stem curves, focal flower locations, and gold accents are fixed.
+Variation changes the individual plants within that composition: leaf angles,
+proportions and colors, petal shapes, wash details, and fine spray branches.
+The package uses a private deterministic arithmetic function. It neither seeds
+nor consumes PGF's random-number stream, including during grouped shipouts.
+
+## Botanical drawing
+
+The border combines broad five-petalled corollas, compound umbels, meadow-flower
+sprays, lobed acanthus-like leaves, and narrower drooping blades. Branch origins
+are sampled from the actual cubic stems so secondary growth stays attached.
+Clipped translucent washes, darker ink pools, pale veins, and hatching remain
+editable vector paths. One framed star and a few small gold marks punctuate
+the blue foliage.
+
+The major composition is authored in `\FM@border` and `\FM@footer` in the package
+source. Each `\FM@axis` segment supplies three attachment coordinates; adjust
+those curves and the motif calls to redesign the border. The sample's left and
+bottom clearances remain independent of the artwork.
 
 ## Colors and background
 

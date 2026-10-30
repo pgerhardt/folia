@@ -2,8 +2,8 @@
 
 **Procedural botanical page borders in pure TikZ.**
 
-Folia draws blue flowers, veined leaves, buds, curling branches, and small gold
-accents around a LaTeX document. It explores the illustrated manuscript border in
+Folia draws five-petalled blue flowers, curling leaves, fine meadow sprays, and
+restrained gold ornament around a LaTeX document. It explores the manuscript border in
 [this r/LaTeX post](https://www.reddit.com/r/LaTeX/comments/1xixznw/how_do_you_make_these_flowers_in_latex/).
 The artwork is generated from editable TikZ paths, with a seed controlling the
 variation from page to page.
@@ -58,18 +58,28 @@ Your document supplies the text and typography; the package draws the border.
 
 The package does not change fonts, margins, page numbering, or page style.
 
-## What varies
+## Drawing and composition
 
-The seed and physical page count control vine phase, branch angles, leaf sizes
-and tones, blossom positions, petal families, and small gold accents. Flowers
-use broad eight-petal or narrow twelve-petal corollas with smaller inner petals.
-Leaves have curved outlines and fine veins; buds, sprays, and a lower garland
-complete the border.
+A large five-petalled flower anchors the upper left. Seven connected S-curves
+carry the border through alternating lobed and narrow, drooping leaves,
+smaller blossoms, compound umbels, buds, and fine meadow sprays. The growth turns
+around the lower-left corner into a progressively lighter horizontal trail.
+Branches attach to points on the actual stem curves.
 
-A fixed seed and page sequence reproduce the same composition. Changing the seed
-changes the artwork. Resetting printed page numbers does not reset the physical
-page counter, so consecutive pages can carry different borders even when their
-printed numbers match.
+Clipped translucent washes, darker pools, radial veins, and fine hatching give
+the blue plants depth. Muted gold is reserved for small diamonds, a few stars,
+and one framed star ornament. Everything remains vector artwork in the PDF.
+
+<img src="docs/images/botanical-detail.png" alt="Close detail of the five-petalled flower, its blue washes and branching veins, and the attached botanical growth" width="460">
+
+## Controlled variation
+
+The major stem paths, focal flowers, and gold accents are deliberately placed.
+The seed and physical page count vary leaf angles, proportions and tones, petal
+shapes and wash details, and the reach of fine sprays within that composition.
+A fixed seed and page sequence reproduce the same drawing. The variation uses
+a private arithmetic function and does not consume PGF's random-number stream.
+Resetting printed page numbers does not reset the physical page counter.
 
 <img src="docs/images/resume-page-2.png" alt="Second page of the sample résumé, showing a different seeded floral border" width="560">
 
@@ -77,7 +87,7 @@ printed numbers match.
 
 | Setting | Effect |
 | --- | --- |
-| `\FloralSetup{seed=271828}` | Choose another composition; use a positive integer from 1 to 1,000,000 |
+| `\FloralSetup{seed=271828}` | Vary botanical details; use a positive integer from 1 to 1,000,000 |
 | `\FloralSetup{paper=false}` | Omit the ivory background |
 | `\FloralOff` | Disable the border and background |
 | `\FloralOn` | Enable the border again |
@@ -95,8 +105,8 @@ example's 51/21/25/33 mm margins provide clearance. Check custom headers, footer
 and page sizes in the rendered PDF.
 
 Borders stay on the left rather than mirroring to the outer edge of a two-sided
-document. Small gold stars are decorative. The drawing has deliberately repeated
-structures, and some secondary stems may look detached at close inspection.
+document. The vertical composition scales with page height; it is tuned for A4
+and is not an automatic layout system. Small gold stars are decorative.
 
 ## Source
 
