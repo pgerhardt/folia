@@ -1,0 +1,223 @@
+% Original procedural botanical ornament. All artwork is pure TikZ.
+\NeedsTeXFormat{LaTeX2e}[2021-06-01]
+\ProvidesPackage{floralmanuscript}[2026/10/29 v1.0 Seeded botanical borders]
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+\definecolor{FloralInk}{HTML}{243F71}
+\definecolor{FloralBlue}{HTML}{355D9B}
+\definecolor{FloralPale}{HTML}{DCE5ED}
+\definecolor{FloralGold}{HTML}{AE8B47}
+\definecolor{FloralPaper}{HTML}{FCFAF5}
+\newif\ifFM@enabled \FM@enabledtrue
+\newif\ifFM@paper \FM@papertrue
+\newcount\FM@folio
+\def\FM@seed{314159}
+\pgfkeys{/floral/.is family,/floral,
+ seed/.store in=\FM@seed,enabled/.is if=FM@enabled,paper/.is if=FM@paper}
+\newcommand{\FloralSetup}[1]{\pgfkeys{/floral,#1}}
+\newcommand{\FloralOff}{\FM@enabledfalse}
+\newcommand{\FloralOn}{\FM@enabledtrue}
+
+% A curved, veined lanceolate leaf; local dimensions are millimetres.
+\newcommand{\FM@leaf}[4]{%
+ \begin{scope}[shift={(#1,#2)},rotate=#3,scale=#4]
+  \pgfmathrandominteger{\FM@tint}{46}{88}
+  \path[fill=FloralBlue!\FM@tint!FloralPale,draw=FloralInk,line width=.10mm]
+   (0,0) .. controls (1.2,1.45) and (3.5,2.05) .. (6.0,.65)
+   .. controls (4.5,.45) and (3.4,-1.25) .. (1.65,-.7)
+   .. controls (.8,-.45) and (.3,-.1) .. (0,0);
+  \draw[FloralPale!85!white,line width=.09mm]
+   (.35,0) .. controls (2.0,.35) and (4.4,.8) .. (5.7,.68);
+  \foreach \t in {1.3,2.2,3.1,4.0}{%
+   \draw[FloralPale!85!white,line width=.055mm]
+    (\t,{.14*\t}) .. controls ({\t+.25},{.3+\t*.14})
+    and ({\t+.4},1.1) .. ({\t+.55},1.2);
+   \draw[FloralPale!75!white,line width=.055mm]
+    (\t,{.14*\t}) .. controls ({\t+.15},-.05)
+    and ({\t+.35},-.35) .. ({\t+.45},-.43);}
+ \end{scope}}
+
+% Broad eight-petal corollas or narrow twelve-petal corollas, with inner petals.
+\newcommand{\FM@flower}[5]{%
+ \begin{scope}[shift={(#1,#2)},rotate=#4,scale=#3]
+  \ifnum#5=0\relax
+   \def\FM@petals{8}\def\FM@width{.47}
+  \else
+   \def\FM@petals{12}\def\FM@width{.24}
+  \fi
+  \foreach \p in {1,...,\FM@petals}{%
+   \pgfmathsetmacro{\FM@rot}{360*\p/\FM@petals+5*rnd-2.5}
+   \pgfmathsetmacro{\FM@reach}{.86+.16*rnd}
+   \pgfmathrandominteger{\FM@shade}{50}{88}
+   \begin{scope}[rotate=\FM@rot]
+    \path[fill=FloralBlue!\FM@shade!FloralPale,draw=FloralInk,line width=.085mm]
+     (0,.08) .. controls (-\FM@width,.30) and (-\FM@width,\FM@reach)
+     .. (0,\FM@reach) .. controls (\FM@width,\FM@reach)
+     and (\FM@width,.30) .. (0,.08);
+    \foreach \v in {-.16,-.08,0,.08,.16}{%
+     \draw[FloralPale!80!white,line width=.045mm]
+      (0,.19) .. controls (\v,.45) and ({1.2*\v},.65)
+      .. (\v,{\FM@reach-.10});}
+    \draw[FloralInk!70!FloralBlue,line width=.05mm]
+     (-.04,.25) .. controls (-.17,.46) and (-.21,.63) .. (-.16,.75);
+   \end{scope}}
+  \foreach \p in {1,...,7}{%
+   \begin{scope}[rotate={\p*360/7+18}]
+    \path[draw=FloralInk,line width=.065mm,fill=FloralPale!75!white]
+     (0,.03) .. controls (-.23,.18) and (-.23,.52) .. (0,.51)
+     .. controls (.23,.52) and (.22,.18) .. (0,.03);
+    \draw[FloralBlue,line width=.06mm] (0,.13) .. controls
+     (-.04,.25) and (.04,.34) .. (0,.43);
+   \end{scope}}
+  \path[fill=FloralGold!70!FloralPaper,draw=FloralInk,line width=.07mm]
+   (0,0) circle[radius=.17];
+  \foreach \a in {0,45,...,315}{%
+   \draw[FloralInk,line width=.055mm] (\a:.12)--(\a:.26);
+   \fill[FloralGold] (\a:.27) circle[radius=.038];}
+  \fill[FloralInk] (0,0) circle[radius=.04];
+ \end{scope}}
+
+\newcommand{\FM@bud}[3]{%
+ \begin{scope}[shift={(#1,#2)},rotate=#3]
+  \path[draw=FloralInk,line width=.12mm,fill=FloralBlue!45!FloralPale]
+   (0,0) .. controls (-1.7,1.0) and (-1.5,3.1) .. (0,3.7)
+   .. controls (1.5,3.1) and (1.7,1.0) .. (0,0);
+  \draw[FloralInk,line width=.09mm] (0,.3) .. controls
+   (-.3,1.4) and (.4,2.6) .. (0,3.4);
+  \draw[FloralGold,line width=.13mm] (-.9,.75)--(0,.1)--(.9,.75);
+ \end{scope}}
+
+\newcommand{\FM@star}[3]{%
+ \begin{scope}[shift={(#1,#2)},scale=#3]
+  \path[fill=FloralGold] (0,1.7)--(.3,.3)--(1.4,0)--(.3,-.3)
+   --(0,-1.7)--(-.3,-.3)--(-1.4,0)--(-.3,.3)--cycle;
+  \foreach \a in {45,135,225,315}{%
+   \draw[FloralGold,line width=.10mm] (\a:.8)--(\a:1.4);}
+ \end{scope}}
+
+% Branch with independently varied leaves, an open spiral and a terminal bud.
+\newcommand{\FM@branch}[4]{%
+ \begin{scope}[shift={(#1,#2)},rotate=#3]
+  \draw[FloralInk,line width=.18mm]
+   (0,0) .. controls ({#4*.32},-.6) and ({#4*.70},2.7) .. (#4,2.2);
+  \draw[FloralGold!70!FloralBlue,line width=.065mm]
+   (.2,.13) .. controls ({#4*.32},-.4) and ({#4*.70},2.9) .. (#4,2.35);
+  \foreach \n in {1,2,3}{%
+   \pgfmathsetmacro{\FM@lx}{#4*(.18+.20*\n)}
+   \pgfmathsetmacro{\FM@ly}{.25+.5*\n}
+   \pgfmathsetmacro{\FM@ls}{.55+.32*rnd}
+   \pgfmathsetmacro{\FM@la}{40+35*rnd}
+   \FM@leaf{\FM@lx}{\FM@ly}{\FM@la}{\FM@ls}
+   \FM@leaf{\FM@lx}{\FM@ly}{-\FM@la}{\FM@ls}}
+  \draw[FloralBlue,line width=.11mm]
+   ({#4*.62},1.5) .. controls ({#4*.75},5.7) and ({#4+3},6.7)
+   .. ({#4+3},4.0) .. controls ({#4+3},2.2) and (#4,2.8) .. ({#4+1.3},4.1);
+  \FM@bud{#4}{2.2}{-65}
+ \end{scope}}
+
+\newcommand{\FM@draw}{%
+ \begingroup
+ % PGF's RNG is global: preserve the document's stream around our own.
+ \let\FM@savedrandom\pgfmath@rnd@z
+ \pgfmathsetseed{\number\numexpr\FM@seed+7919*\FM@folio\relax}
+ \begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm]
+  \begin{scope}[shift={(current page.south west)}]
+   \pgfmathsetmacro{\FM@H}{\paperheight/1mm}
+   \pgfmathsetmacro{\FM@W}{\paperwidth/1mm}
+   \ifFM@paper\fill[FloralPaper] (0,0) rectangle (\FM@W,\FM@H);\fi
+   % Clip to reserved margins, independent of body text layout.
+   \begin{scope}
+    \clip (7,9) rectangle (44,{\FM@H-10});
+    \pgfmathsetmacro{\FM@phase}{360*rnd}
+    \pgfmathsetmacro{\FM@amplitude}{2.4+1.5*rnd}
+    \pgfmathsetmacro{\FM@baseX}{25+\FM@amplitude*sin(27*3+\FM@phase)}
+    \xdef\FM@baseX{\FM@baseX}
+    \draw[FloralInk,line width=.26mm]
+     plot[domain=27:{\FM@H-33},samples=100,smooth,variable=\t]
+     ({25+\FM@amplitude*sin(\t*3.0+\FM@phase)},\t);
+    \draw[FloralGold,line width=.10mm]
+     plot[domain=27:{\FM@H-33},samples=100,smooth,variable=\t]
+     ({25.55+\FM@amplitude*sin(\t*3.0+\FM@phase)},\t);
+    \foreach \i in {0,...,14}{%
+     \pgfmathsetmacro{\FM@y}{34+\i*(\FM@H-82)/14+3*rnd}
+     \pgfmathsetmacro{\FM@x}{25+\FM@amplitude*sin(\FM@y*3+\FM@phase)}
+     \pgfmathsetmacro{\FM@len}{7+4*rnd}
+     \pgfmathsetmacro{\FM@angle}{22+24*rnd}
+     \ifodd\i\relax\pgfmathsetmacro{\FM@angle}{180-\FM@angle}\fi
+     \FM@branch{\FM@x}{\FM@y}{\FM@angle}{\FM@len}}
+    \draw[FloralBlue,line width=.12mm]
+     (34,17) .. controls (8,28) and (8,58) .. (18,82)
+     .. controls (27,94) and (25,103) .. (18,115)
+     .. controls (7,148) and (34,178) .. (20,{\FM@H-44});
+    \foreach \i in {0,...,7}{%
+     \pgfmathsetmacro{\FM@sy}{45+\i*(\FM@H-100)/7+5*rnd}
+     \pgfmathsetmacro{\FM@sx}{14+3*rnd}
+     \draw[FloralBlue,line width=.10mm]
+      (22,{\FM@sy-8}) .. controls (12,{\FM@sy-2})
+      and (\FM@sx,\FM@sy) .. (\FM@sx,{\FM@sy+4});
+     \foreach \k in {1,2,3}{%
+      \pgfmathsetmacro{\FM@tinyx}{\FM@sx+1.1-\k*.25}
+      \pgfmathsetmacro{\FM@tinyy}{\FM@sy-5+\k*1.8}
+      \FM@leaf{\FM@tinyx}{\FM@tinyy}{135}{.26}
+      \FM@leaf{\FM@tinyx}{\FM@tinyy}{40}{.24}}
+     \foreach \j in {-1,0,1}{%
+      \draw[FloralInk,line width=.08mm]
+       (\FM@sx,\FM@sy)--({\FM@sx+\j*2},{\FM@sy+4-abs(\j)});
+      \fill[FloralGold] ({\FM@sx+\j*2},{\FM@sy+4-abs(\j)}) circle[radius=.35];}}
+    % Large top blossom: varied position, size, rotation and petal family.
+    \pgfmathsetmacro{\FM@topx}{23+3*rnd}
+    \pgfmathsetmacro{\FM@topy}{\FM@H-30+2*rnd}
+    \pgfmathsetmacro{\FM@topr}{8.6+.9*rnd}
+    \pgfmathsetmacro{\FM@toprot}{45*rnd}
+    \pgfmathrandominteger{\FM@kind}{0}{1}
+    \FM@flower{\FM@topx}{\FM@topy}{\FM@topr}{\FM@toprot}{\FM@kind}
+    \foreach \i in {0,...,4}{%
+     \pgfmathsetmacro{\FM@fy}{49+\i*(\FM@H-115)/5+10*rnd}
+     \pgfmathsetmacro{\FM@fx}{20+12*rnd}
+     \pgfmathsetmacro{\FM@fr}{3.0+1.7*rnd}
+     \pgfmathsetmacro{\FM@fa}{90*rnd}
+     \pgfmathrandominteger{\FM@kind}{0}{1}
+     \draw[FloralInk,line width=.13mm]
+      (25,{\FM@fy-9}) .. controls (\FM@fx,{\FM@fy-5})
+      and (\FM@fx,{\FM@fy-3}) .. (\FM@fx,\FM@fy);
+     \FM@flower{\FM@fx}{\FM@fy}{\FM@fr}{\FM@fa}{\FM@kind}}
+    \foreach \i in {0,...,10}{%
+     \pgfmathsetmacro{\FM@gx}{11+29*rnd}
+     \pgfmathsetmacro{\FM@gy}{31+(\FM@H-54)*rnd}
+     \FM@star{\FM@gx}{\FM@gy}{.24+.22*rnd}}
+   \end{scope}
+   % Low garland closes the page, well below the text block.
+   \begin{scope}
+    \clip (10,8) rectangle ({\FM@W-10},30);
+    \draw[FloralInk,line width=.19mm]
+     (\FM@baseX,27) .. controls (29,13) and (46,17) .. (64,15)
+     .. controls (104,10) and (143,20) .. ({\FM@W-20},14);
+    \foreach \i in {0,...,14}{%
+     \pgfmathsetmacro{\FM@bx}{36+\i*(\FM@W-60)/15}
+     \pgfmathsetmacro{\FM@by}{14+.8*sin(\i*31)}
+     \pgfmathsetmacro{\FM@ba}{35+30*rnd}
+     \pgfmathsetmacro{\FM@bs}{.55+.28*rnd}
+     \FM@leaf{\FM@bx}{\FM@by}{\FM@ba}{\FM@bs}
+     \FM@leaf{\FM@bx}{\FM@by}{-\FM@ba}{.55}
+     \ifodd\i\relax
+      \fill[FloralGold] ({\FM@bx+2},{\FM@by+5}) circle[radius=.45];\fi}
+    \pgfmathsetmacro{\FM@bottomx}{\FM@W-34+7*rnd}
+    \FM@flower{\FM@bottomx}{16}{4}{23*rnd}{1}
+   \end{scope}
+   \draw[FloralGold!70!FloralPaper,line width=.18mm]
+    (50,{\FM@H-16})--({\FM@W-20},{\FM@H-16});
+   \FM@star{\FM@W-17}{\FM@H-16}{.7}
+   \begin{scope}[shift={({\FM@W-13},{\FM@H-41})},rotate=100,scale=.65]
+    \FM@branch{0}{0}{0}{14}
+   \end{scope}
+  \end{scope}
+ \end{tikzpicture}
+ \global\let\pgfmath@rnd@z\FM@savedrandom
+ \endgroup}
+
+% Count physical sheets: resetting printed page numbers never repeats borders.
+% Disabled pages consume a folio as well, preserving document-wide sequencing.
+\AddToHook{shipout/background}[floralmanuscript]{%
+ \global\advance\FM@folio by 1\relax
+ \ifFM@enabled\FM@draw\fi}
+\endinput

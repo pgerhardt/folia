@@ -1,0 +1,13 @@
+/output/
+/tmp/
+**/build/
+/floral-manuscript/sample-resume.pdf
+/floral-manuscript/main.pdf
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+*.aux
+*.log
+*.out
+*.synctex.gz

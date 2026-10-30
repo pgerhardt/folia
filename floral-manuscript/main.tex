@@ -1,0 +1,115 @@
+% Compile twice with pdfLaTeX. All biography and achievements are fictional.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,left=51mm,right=21mm,top=25mm,bottom=33mm]{geometry}
+\usepackage{microtype}
+\usepackage{floralmanuscript}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=FloralInk,
+ pdftitle={Elena Rowan - Sample Resume},
+ pdfauthor={Fictional example},pdfsubject={Procedural floral manuscript resume}}
+\FloralSetup{seed=314159,paper=true}
+\definecolor{TextInk}{HTML}{252E3A}
+\definecolor{MutedInk}{HTML}{596777}
+\color{TextInk}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.04}
+\newcommand{\eyebrow}[1]{{\fontsize{8}{11}\selectfont\sffamily\color{MutedInk}\MakeUppercase{#1}}}
+\newcommand{\cvsection}[1]{%
+ \par\addvspace{12pt}{\large\scshape\color{FloralInk}#1\par}\nobreak\vspace{2pt}}
+\newcommand{\role}[3]{%
+ \par\addvspace{5pt}{\bfseries #1}\hfill{\small\color{MutedInk}#2}\par\nobreak
+ {\itshape\color{FloralInk}#3}\par\nobreak\vspace{-3pt}}
+\newenvironment{achievements}{%
+ \begin{list}{\textcolor{FloralGold}{\small\textbullet}}{%
+ \setlength{\leftmargin}{12pt}\setlength{\labelwidth}{6pt}
+ \setlength{\labelsep}{6pt}\setlength{\itemsep}{4pt}
+ \setlength{\parsep}{0pt}\setlength{\topsep}{4pt}}}{\end{list}}
+\newcommand{\folio}[1]{%
+ \vfill\par{\fontsize{8}{10}\selectfont\color{MutedInk}
+ \textsc{Elena Rowan}\hfill #1\,/\,2}}
+\begin{document}
+\eyebrow{Curriculum vitae\enspace /\enspace Fictional example}
+\vspace{5pt}
+
+{\fontsize{34}{38}\selectfont\color{FloralInk}Elena Rowan}\par
+\vspace{1pt}
+{\large\itshape Botanical Illustrator \& Editorial Designer}\par
+\vspace{5pt}
+{\small Denver, Colorado\enspace\textcolor{FloralGold}{\textbullet}\enspace
+\href{mailto:elena.rowan@example.com}{elena.rowan@example.com}\\
+\href{https://example.com/elena-rowan}{example.com/elena-rowan}\enspace\textcolor{FloralGold}{\textbullet}\enspace
+Available for studio and publishing collaborations}
+
+\cvsection{Profile}
+Illustrator and designer translating botanical research into clear, expressive
+publications. Six years of experience across field guides, museum interpretation,
+and editorial systems. Combines close observation, patient craft, and practical
+production skills to make complex subjects inviting.
+
+\cvsection{Experience}
+\role{Senior Editorial Designer}{2023--Present}{Fieldnote Studio\enspace /\enspace Denver, CO}
+\begin{achievements}
+ \item Lead visual development for illustrated books, exhibition guides, and
+ seasonal publications, from early sketches to press-ready files.
+ \item Built a modular page system for a 240-page regional flora, coordinating
+ 180 illustrations with three contributing botanists.
+ \item Standardized proofing and preflight checklists across a six-person team,
+ reducing average correction rounds from four to two.
+\end{achievements}
+\role{Illustrator \& Graphic Designer}{2020--2023}{Juniper Natural History Museum\enspace /\enspace Boulder, CO}
+\begin{achievements}
+ \item Created specimen illustrations, interpretive panels, and visitor maps
+ for exhibitions on native plants and pollinator habitats.
+ \item Designed an accessible family field journal used in 24 school workshops,
+ with clear visual prompts and space for observation.
+ \item Prepared color-managed artwork and coordinated production with local
+ printers, fabricators, and the museum education team.
+\end{achievements}
+
+\cvsection{Selected strengths}
+\textbf{Illustration}\enspace Botanical drawing, pen and ink, watercolor, vector artwork.\par
+\textbf{Design}\enspace Book typography, information hierarchy, publication systems.\par
+\textbf{Collaboration}\enspace Research synthesis, art direction, production handoff.
+\folio{1}
+\newpage
+
+\eyebrow{Elena Rowan\enspace /\enspace Selected work \& background}
+\vspace{6pt}
+
+{\fontsize{26}{30}\selectfont\color{FloralInk}Observation into form}\par
+{\itshape A selection of projects, study, and shared practice.}
+
+\cvsection{Selected projects}
+\role{Flora of the Front Range}{2025}{Illustrated field guide\enspace /\enspace Fieldnote Studio}
+Designed a portable identification guide with a consistent specimen scale,
+habitat icons, and a visual index. Developed botanical plates from field sketches
+and refined diagnostic details with scientific reviewers.
+\role{The Pollinator Garden}{2024}{Exhibition identity\enspace /\enspace Juniper Museum}
+Created an illustrated identity and a suite of 18 interpretation panels.
+Balanced botanical detail with large-format readability and supplied reusable
+templates for future seasonal updates.
+\role{A Cabinet of Seeds}{2022}{Independent artist's book\enspace /\enspace Edition of 100}
+Produced a hand-bound collection pairing fine-line seed drawings with natural-history
+notes. Managed concept, typography, paper selection, printing, and binding.
+
+\cvsection{Education}
+\role{BFA, Communication Design}{2020}{North Valley College of Art}
+Focus on editorial design, scientific illustration, and print production.\par
+\role{Certificate, Botanical Illustration}{2022}{Mountain Botanical Arts Program}
+Advanced study in plant morphology, observational drawing, and watercolor.
+
+\cvsection{Tools \& methods}
+Adobe InDesign, Illustrator, and Photoshop; Affinity Designer; Figma;
+LaTeX and TikZ; digital asset preparation; print preflight; color proofing.\par
+Builds reusable templates and documented visual standards for collaborative teams.
+
+\cvsection{Teaching \& community}
+\textbf{Sketching the Seasonal Garden}\enspace /\enspace 2024--Present\par
+Facilitate quarterly drawing sessions for adult beginners, introducing plant
+structure, field-note habits, and simple ink-and-wash techniques.
+\folio{2}
+\end{document}
